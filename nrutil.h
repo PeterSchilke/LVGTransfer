@@ -7,7 +7,6 @@
 
 #ifndef _NR_UTILS_H_
 #define _NR_UTILS_H_
-#include <string_view>
 
 static double sqrarg;
 #define SQR(a) ((sqrarg=(a)) == 0.0 ? 0.0 : sqrarg*sqrarg)
