@@ -79,7 +79,7 @@ void NH3::PrintOut(Cloud &thisCloud)
     cout << setw(6) << setprecision(2) << thisCloud.T_cosmic();
     cout << endl << endl;
 
-   cout << " Ji Ki pi Jf Kf pf    T_ex        freq    tau(Back)    T_l(Back)     tau(HII)     T_l(HII)        T_bg          tau         T_l"  
+   cout << " vi Ji Ki pi vf Jf Kf pf    T_ex        freq    tau(Back)    T_l(Back)     tau(HII)     T_l(HII)        T_bg          tau         T_l"  
 	 << endl;
 
     outFile << endl << " The calculation for "
@@ -139,7 +139,7 @@ void NH3::PrintOut(Cloud &thisCloud)
     outFile << setw(6) << setprecision(2) << thisCloud.T_cosmic();
     outFile << endl << endl;
  
-    outFile << " Ji Ki pi Jf Kf pf    T_ex        freq    tau(Back)    T_l(Back)     tau(HII)     T_l(HII)     T_bg             tau          T_l"	    << endl;
+    outFile << " vi Ji Ki pi vf Jf Kf pf    T_ex        freq    tau(Back)    T_l(Back)     tau(HII)     T_l(HII)     T_bg             tau          T_l"	    << endl;
 
 
 
@@ -170,6 +170,8 @@ void NH3::PrintOut(Cloud &thisCloud)
 	    double nf = n_Of_Level[f]*b_Of_Level[f];
 	    double gi = g_Of_Level[i];
 	    double gf = g_Of_Level[f];
+	    int vi = v_Of_Level[i];
+	    int vf = v_Of_Level[f];
 	    int Ji = J_Of_Level[i];
 	    int Jf = J_Of_Level[f];
 	    int Ki = K_Of_Level[i];
@@ -207,11 +209,15 @@ void NH3::PrintOut(Cloud &thisCloud)
 		    ) * (1. - exp(-tau));
 		
 		cout.setf(ios::fixed, ios::floatfield);
+		cout << setw(3) << setprecision(0) << vi;
+		cout.setf(ios::fixed, ios::floatfield);
 		cout << setw(3) << setprecision(0) << Ji;
 		cout.setf(ios::fixed, ios::floatfield);
 		cout << setw(3) << setprecision(0) << Ki;
 		cout.setf(ios::fixed, ios::floatfield);
 		cout << setw(3) << setprecision(0) << pi;
+		cout.setf(ios::fixed, ios::floatfield);
+		cout << setw(3) << setprecision(0) << vf;
 		cout.setf(ios::fixed, ios::floatfield);
 		cout << setw(3) << setprecision(0) << Jf;
 		cout.setf(ios::fixed, ios::floatfield);
