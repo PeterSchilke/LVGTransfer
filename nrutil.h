@@ -7,6 +7,7 @@
 
 #ifndef _NR_UTILS_H_
 #define _NR_UTILS_H_
+#include <string_view>
 
 static double sqrarg;
 #define SQR(a) ((sqrarg=(a)) == 0.0 ? 0.0 : sqrarg*sqrarg)
@@ -48,7 +49,7 @@ static int iminarg1,iminarg2;
 
 #define SIGN(a,b) ((b) >= 0.0 ? fabs(a) : -fabs(a))
 
-void nrerror(char error_text[]);
+void nrerror(const char* error_text);
 double *vector(long nl, long nh);
 int *ivector(long nl, long nh);
 unsigned char *cvector(long nl, long nh);
