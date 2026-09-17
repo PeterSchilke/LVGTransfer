@@ -30,7 +30,7 @@ const double pc = 3.0856e18;  // pc in cm
 
 //Constants
 const int string_size = 128;
-const int maxLev = 200;
+const int maxLev = 500;
 const int maxTemp = 50;
 const int maxJ = 25;
 const int maxVib = 2;   // maximum number of vibrational levels
