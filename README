@@ -1,0 +1,90 @@
+Compilation: 
+
+unpack lvg.tar.gz (tar xvzf lvg.tar.gz)
+make
+
+that should compile.  If you have expectk installed on your system,
+you can use the graphical interface (lvg_gui, you will have to modify
+the path in the first line of this text file).  If not, you have to
+use the manual lvg program.
+
+Before using it, define an environmental variable, LVG_Data, to point
+to the directory where the data are, i.e.
+
+(t)csh:  setenv LVG_Data path_to_Data_directory
+bash:    export LVG_Data=path_to_Data_directory
+
+then run ./lvg
+
+This can be run as single run or as loop.  The input parameters mean:
+
+Molecule: pick one from list 
+
+Number of Levels: as many as you want - there is a safeguard, so it
+	  does not use more levels than are available, but if you use
+	  many more than you need (e.g. no highly excited levels if
+	  you want to run dark cloud models), this can bomb the
+	  program, and in the best case will just make it run longer
+
+Init: use whatever, it shouldn't matter
+
+Mode: single or loop, depending on what you want.  For loop, one
+      defines ranges and either steps (for Temperature) or factors
+      (for density, colum density etc.)
+
+T_kin:	   kinetic temperature
+n(H2):	    density
+X(e):	    electron density - only relevant for HCO+
+N(mol):	    molecular column density
+T_dust:	    temperature of internal dust
+N(H_2):	    H_2 column density, only used for internal dust radiation
+delta_v:    line width - remember that in the LVG approximation only 
+	    N(mol)/delta_v (= X(mol)/(dv/dr) is relevant)
+Tback:	    temperature of background grey body
+beta_back:  dust opacity index of background grey body
+tau100mic:  opacity at 100 mic of background grey body
+Wback:	    geometric filling factor of background grey body
+Te:	    electron temperature of background HII region
+EM:	    emission measure of background HII region
+WHII:	    geometric filling factor of background HII region
+T_cosmic:   cosmic background temperature, 2.73 K for our Galaxy
+
+
+Output:
+
+There are three outputs: one on the screen, one in <molecule>.out
+(copy of screen output, for human consumption) and one in
+<molecule.plt> (for computer consumption).  The parameters on the
+screen mean:
+
+Ji, Jf, Ki, Kf etc.:	quantum numbers
+T_ex:			excitation temperature
+freq:			frequency of transition
+tau(Back):		opacity of background grey body
+T_l(Back):		brightness temperature of background grey body
+tau(HII):		opacity of background HII region
+T_l(HII):		brightness temperature of background HII
+			region
+T_bg:			T_l(Back)+T_l(HII)
+tau:			opacity of molecular line
+T_l:			line temperature - in front of background
+			sources, so absorption is possible
+
+
+In <molecule>.plt, the same information can be found, but to read the
+stuff e.g. into GreG, one has to compare with <molecule>.out and count
+the columns - it's a bit awkward, but the exact information in there
+is different for different molecules.
+
+In case of trouble, please contact me: schilke@mpifr-bonn.mpg.de
+
+I don't give any warranty, use at your own risk.  It's a human
+product, and may contain bugs.
+
+If you use this program in any paper, please mention it in the
+acknowledgements.
+
+Enjoy!
+
+	Peter
+

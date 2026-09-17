@@ -1,0 +1,117 @@
+
+
+	General comments
+	----------------
+
+The LVG program is a generic radiative transfer program which supports
+various molecules.  The list of supported molecules will hopefully
+grow, but I will only add things I'm interested in.  The formalism is
+large velocity gradient with Sobolev approximation.  
+
+The program is written in C++ and optionally uses a library called
+blitz++ to deal with arrays.  This library works only with the egcs
+compiler above a certain version number which I've forgotten.  I have
+only run and tested it on Linux, but it may work on other platforms as
+well.  Since Linux is widely distributed, I am inclined to distribute
+the binary rather than let the people compile themselves, although
+interested persons can get the source if needed.
+
+NEW: If you don't have blitz++ (or don't have Linux), it should be
+possible to compile it.  Just comment out the lines referring to blitz
+in generic/Makefile and type
+
+   make noblitz
+
+which should produce the file lvg_noblitz, which is the binary.
+However, I use g++, which is available for free on all platforms, and
+the program has only been tested with that compiler (there were
+problems on our SUNs and HPs though).  If you have other c++
+compilers, you have to modify the Makefile.  If it works, fine.  If
+not, you're on your own: I'm not going to modify the code.
+
+Setup: quite easy, if the binary is used.  You have to put the binary
+(lvg) somewhere in your path, then the data files (.dat and .col
+Files) somewhere else.  You have to point to that directory with the
+environmental variable LVG_Data, e.g. with
+
+setenv LVG_Data /home/schilke/transfer/lvg/Data  (for csh and tcsh)
+
+       or
+
+export LVG_Data=/home/schilke/transfer/lvg/Data   (bash and friends)
+
+and then you're ready to run.  You can run either single calculations
+or loops, but looping is not supported for all variables (right now
+only temperature, H2 density and column density, if I remember
+correctly).  A gui interface (lvg_gui using expectk, which should also exist
+on every Linux station) is available for single calculations.
+
+There are two output files: a <molecule>.out and a <molecule>.plt,
+where <molecule> is the molecule used.  The .out file is a copy of the
+screen output, the .plt file is a table to plot things using
+e.g. GreG.  To use it, one has to know which columns are which.  This
+information is written in a commented form (for GreG plots) in the first
+line of the file, you have to figure out the column numbers yourself.
+
+The feature of using internal dust is not recommended right now, I
+have to look at this again, it may be broken.  But background HII
+region or dust source are OK - in the present version they only play a
+role in the output (i.e. absorption strengths etc.), their radiation
+fields are at present NOT used in the calculation of the level
+populations.
+
+Collisions with electrons are only supported for HCO+.  
+
+NOTE: NH3 doesn't work right now!!!
+TODO:
+
+make internal dust operational again
+make using external fields for level population calculation optional
+more molecules
+
+
+
+      GUI comments
+      ------------
+
+The GUI is just a frontend for the program, only for single runs.  It
+uses expect, which is fairly standard on Linux, but also available on
+other machines.  It makes life simple, but isn't really needed to run
+the program. It provides defaults, which can be customized.  After GO
+has been pressed for the first time, the molecule can't be changed any
+more, if you want to do this, use Exit and start again.
+
+The GUI allows for a personal initialisation file for all the
+variables, ~/.lvg .  In there, the following variables can be
+customized:
+
+# program - HAS to be customized to the local installation
+set lvg_prog /home/schilke/transfer/lvg/generic/lvg
+
+# initialisation - just for site initialisation
+# for private initialisation, use ~/.lvg
+
+set molecule co
+set n_levels 10
+# now parameters
+set temperature 10
+set n_H2 1e4
+set n_e 0
+set n_mol 1e15
+set t_d $temperature
+set N_H2 0
+set vgrad 1
+set t_back 100
+set beta_back 2
+set tau100mic 1
+set w_back 0
+set te 10000
+set em 1e9
+set w_hii 0
+
+set font 		-Adobe-Helvetica-Medium-R-Normal--14-140-*-*-*-*-*-*
+set prompt_font		-Adobe-Helvetica-Bold-R-Normal--14-140-*-*-*-*-*-*
+
+
+
+Peter Schilke <schilke@mpifr-bonn.mpg.de>

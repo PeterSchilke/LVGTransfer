@@ -1,0 +1,315 @@
+//
+// PrintOut.cc	-- Peter Schilke Tue Mar  4 1997
+//
+//  Time-stamp: <2007-11-14 18:12:43 schilke> 
+//
+#include <iostream>
+#include <iomanip>
+#include "Mols.h"
+#include "extra.h"
+
+void LinearVib::PrintOut(Cloud &thisCloud)
+{
+    int i, f;
+    
+// header
+    
+    double N_tot = thisCloud.Nmol() * 1e5/V_conv;
+    
+    cout << endl << " The calculation for "
+	 << BOLD << this->MolName() << OFF << " used "
+	 << BOLD << Number_Of_Levels << OFF << " levels" << endl;
+    cout << endl;
+    
+    cout << " T_kin  = ";
+    cout.setf(ios::fixed, ios::floatfield);
+    cout << setw(6) << setprecision(2) << thisCloud.Tkin();
+    cout << "    n(H_2) = ";
+    cout.setf(ios::scientific, ios::floatfield);
+    cout << setw(10) << setprecision(6) << thisCloud.nH2();
+    cout << "    N(Mol) = ";
+    cout.setf(ios::scientific, ios::floatfield);
+    cout << setw(10) << setprecision(6) << N_tot;
+    cout << "    X(e) = ";
+    cout.setf(ios::scientific, ios::floatfield);
+    cout << setw(10) << setprecision(6) << thisCloud.Xe();
+    cout << endl;
+
+    cout << " T_dust = ";
+    cout.setf(ios::fixed, ios::floatfield);
+    cout << setw(6) << setprecision(2) << thisCloud.Tdust();
+    cout << "    N(H_2) = ";
+    cout.setf(ios::scientific, ios::floatfield);
+    cout << setw(10) << setprecision(6) << thisCloud.NH2();
+    cout << "    delta_v = ";
+    cout.setf(ios::scientific, ios::floatfield);
+    cout << setw(10) << setprecision(6) << thisCloud.delta_v();
+    cout << endl;
+ 
+    cout << " T_back = ";
+    cout.setf(ios::fixed, ios::floatfield);
+    cout << setw(6) << setprecision(2) << thisCloud.Tback();
+    cout << "    beta_back = ";
+    cout.setf(ios::fixed, ios::floatfield);
+    cout << setw(6) << setprecision(2) << thisCloud.beta_back();
+    cout << "       tau100mic = ";
+    cout.setf(ios::fixed, ios::floatfield);
+    cout << setw(6) << setprecision(2) << thisCloud.tau100mic();
+    cout << "    Wback = ";
+    cout.setf(ios::fixed, ios::floatfield);
+    cout << setw(6) << setprecision(2) << thisCloud.Wback();
+    cout << endl;
+ 
+ 
+    cout << " T_e = ";
+    cout.setf(ios::fixed, ios::floatfield);
+    cout << setw(6) << setprecision(2) << thisCloud.Te();
+    cout << "     EM = ";
+    cout.setf(ios::scientific, ios::floatfield);
+    cout << setw(10) << setprecision(6) << thisCloud.EM();
+    cout << "  WHII = ";
+    cout.setf(ios::fixed, ios::floatfield);
+    cout << setw(8) << setprecision(4) << thisCloud.WHII();
+    cout << endl;
+
+
+    cout << " T_cosmic = ";
+    cout.setf(ios::fixed, ios::floatfield);
+    cout << setw(6) << setprecision(2) << thisCloud.T_cosmic();
+    cout << endl << endl;
+ 
+    cout << " Ji  Jf    T_ex        freq    tau(Back)    T_l(Back)     tau(HII)     T_l(HII)        T_bg          tau         T_l"  
+	 << endl;
+
+    outFile << endl << " The calculation for "
+	 << BOLD << this->MolName() << OFF << " used "
+	 << BOLD << Number_Of_Levels << OFF << " levels" << endl;
+    outFile << endl;
+    
+    outFile << " T_kin  = ";
+    outFile.setf(ios::fixed, ios::floatfield);
+    outFile << setw(6) << setprecision(2) << thisCloud.Tkin();
+    outFile << "    n(H_2) = ";
+    outFile.setf(ios::scientific, ios::floatfield);
+    outFile << setw(10) << setprecision(6) << thisCloud.nH2();
+    outFile << "    N(Mol) = ";
+    outFile.setf(ios::scientific, ios::floatfield);
+    outFile << setw(10) << setprecision(6) << N_tot;
+    outFile << endl;
+
+    outFile << " T_dust = ";
+    outFile.setf(ios::fixed, ios::floatfield);
+    outFile << setw(6) << setprecision(2) << thisCloud.Tdust();
+    outFile << "    N(H_2) = ";
+    outFile.setf(ios::scientific, ios::floatfield);
+    outFile << setw(10) << setprecision(6) << thisCloud.NH2();
+    outFile << "    delta_v = ";
+    outFile.setf(ios::scientific, ios::floatfield);
+    outFile << setw(10) << setprecision(6) << thisCloud.delta_v();
+    outFile << endl;
+ 
+    outFile << " T_back = ";
+    outFile.setf(ios::fixed, ios::floatfield);
+    outFile << setw(6) << setprecision(2) << thisCloud.Tback();
+    outFile << "    beta_back";
+    outFile.setf(ios::fixed, ios::floatfield);
+    outFile << setw(6) << setprecision(2) << thisCloud.beta_back();
+    outFile << "    tau100mic = ";
+    outFile.setf(ios::fixed, ios::floatfield);
+    outFile << setw(6) << setprecision(2) << thisCloud.tau100mic();
+    outFile << "    Wback = ";
+    outFile.setf(ios::fixed, ios::floatfield);
+    outFile << setw(6) << setprecision(2) << thisCloud.Wback();
+    outFile << endl;
+
+    outFile << " T_e = ";
+    outFile.setf(ios::fixed, ios::floatfield);
+    outFile << setw(6) << setprecision(2) << thisCloud.Te();
+    outFile << "    EM = ";
+    outFile.setf(ios::fixed, ios::floatfield);
+    outFile << setw(6) << setprecision(2) << thisCloud.EM();
+    outFile << "    WHII = ";
+    outFile.setf(ios::fixed, ios::floatfield);
+    outFile << setw(8) << setprecision(4) << thisCloud.WHII();
+    outFile << endl;
+ 
+    outFile << " T_cosmic = ";
+    outFile.setf(ios::fixed, ios::floatfield);
+    outFile << setw(6) << setprecision(2) << thisCloud.T_cosmic();
+    outFile << endl << endl;
+
+
+    outFile << " Ji  Jf    T_ex        freq    tau(Back)    T_l(Back)     tau(HII)     T_l(HII)     T_bg             tau          T_l" 
+	    << endl;
+
+
+
+    if (Convergence == 1)
+	// only write to .plt file if converged
+	{
+	    plotFile << thisCloud.Tkin() << " ";
+	    plotFile << thisCloud.nH2() << " ";
+	    plotFile << N_tot << " ";
+	    plotFile << thisCloud.Tback() << " ";
+	    plotFile << thisCloud.tau100mic() << " ";
+	    plotFile << thisCloud.Wback() << " ";
+	    plotFile << thisCloud.Te() << " ";
+	    plotFile << thisCloud.EM() << " ";
+	    plotFile << thisCloud.WHII() << " ";
+	}
+    
+//	    for (i=0; i<=Number_Of_Levels; i++) {
+//		cout.setf(ios::fixed, ios::floatfield);
+//		cout << "i: " << setw(3) << setprecision(0) <<  i ;
+//		cout.setf(ios::scientific, ios::floatfield);
+//		cout << "  " << setw(14) << setprecision(8) << n_Of_Level[i] << endl;
+//	    }
+    double nsum = 0;
+    for (i=0; i< Number_Of_Levels; i++) 
+	{
+	    nsum += n_Of_Level[i]*b_Of_Level[i];
+	}
+    
+    double n0 = N_tot/nsum; 
+//    cout << N_tot << " " << n0 << endl;
+    for (i=1; i<Number_Of_Levels; i++){
+	for (f=0; f<i; f++){
+	    double ni = n_Of_Level[i]*b_Of_Level[i];
+	    double nf = n_Of_Level[f]*b_Of_Level[f];
+	    
+//	    cout <<i << " " << n_Of_Level[i] << " " << b_Of_Level[i] << " " << ni << endl;
+//	    cout <<f << " " << n_Of_Level[f] << " " << b_Of_Level[f] << " " << nf << endl;
+	    
+	    double gi = g_Of_Level[i];
+	    double gf = g_Of_Level[f];
+	    int Ji = J_Of_Level[i];
+	    int Jf = J_Of_Level[f];
+
+	    double freq = this->frequency(i,f);
+	    double A = this->A(i,f);  // Einstein-A coefficient
+
+	    if (ni > 0. && nf > 0. && ni != nf && A != 0){
+//		double R  = ni/nf * gf/gi;
+		double R  = nf/ni * gi/gf;
+		double T_ex = freq * GHzToK * 1e-9/log(R);
+		double c = c_Light/freq;
+		double wave = c_Light/freq * 1e4;   // wavelength in mic
+		double tau_0 = A*c*c*c/(8*Pi*thisCloud.delta_v()*1e5);
+		double tau = tau_0 * ni * n0 * (R-1.);
+		if (tau < -100) tau = -100;
+//		     dust absorption coefficient */
+		double kap_d = kappaCalc(freq,thisCloud.nH2());
+		    /* dust optical depth */
+		double tau_d = thisCloud.delta_v()
+		    * sqrt(thisCloud.Tkin())/thisCloud.vgrad() * kap_d;
+		    /* total optical depth of dust */
+                double tau_d_inf = thisCloud.length() * kap_d;
+		double tauBack = thisCloud.tau100mic() * pow(wave/100, -thisCloud.beta_back());
+		double Wback = thisCloud.Wback();
+		double T_lBack = RJ(thisCloud.Tback(),freq)* (1 - exp(-tauBack)) * Wback;
+		double T_e = thisCloud.Te();
+		double tauHII = 8.235e-2 * pow(T_e,-1.35) * pow(freq*1.e-9,-2.1) * thisCloud.EM();
+		double T_lHII = RJ(T_e, freq) * (1 - exp(-tauHII)) * thisCloud.WHII();
+		double T_l = (RJ(T_ex,freq) - RJ(thisCloud.T_cosmic(),freq) - T_lBack -T_lHII
+//			      - RJ(thisCloud.Tdust(),freq)*(1-exp(-tau_d_inf))
+		    ) * (1. - exp(-tau));
+		
+		cout.setf(ios::fixed, ios::floatfield);
+		cout << setw(3) << setprecision(0) << Ji;
+		cout.setf(ios::fixed, ios::floatfield);
+		cout << setw(3) << setprecision(0) << Jf;
+		cout.setf(ios::fixed, ios::floatfield);
+		cout << "  " << setw(7) << setprecision(2) << T_ex;
+//		cout.setf(ios::scientific, ios::floatfield);
+//		cout << "  " << setw(7) << setprecision(2) << R;
+		cout.setf(ios::scientific, ios::floatfield);
+		cout << "  " << setw(10) << setprecision(4) << freq*1e-9;
+		cout.setf(ios::scientific, ios::floatfield);
+		cout << "  " << setw(11) << setprecision(4) << tauBack;
+		cout.setf(ios::scientific, ios::floatfield);
+		cout << "  " << setw(11) << setprecision(4) <<  T_lBack;
+		cout.setf(ios::scientific, ios::floatfield);
+		cout << "  " << setw(11) << setprecision(4) << tauHII;
+		cout.setf(ios::scientific, ios::floatfield);
+		cout << "  " << setw(11) << setprecision(4) <<  T_lHII;
+		cout.setf(ios::scientific, ios::floatfield);
+		cout << "  " << setw(10) << setprecision(4) << T_lBack+T_lHII;
+//		cout.setf(ios::scientific, ios::floatfield);
+//		cout << "  " << setw(11) << setprecision(4) << T_ex;
+		cout.setf(ios::scientific, ios::floatfield);
+		cout << "  " << setw(11) << setprecision(4) << tau;
+		cout.setf(ios::scientific, ios::floatfield);
+		cout << "  " << setw(10) << setprecision(4) << T_l;
+		cout << endl;
+
+		outFile.setf(ios::fixed, ios::floatfield);
+		outFile << setw(3) << setprecision(0) << Ji;
+		outFile.setf(ios::fixed, ios::floatfield);
+		outFile << setw(3) << setprecision(0) << Jf;
+		outFile.setf(ios::fixed, ios::floatfield);
+		outFile << "  " << setw(7) << setprecision(2) << T_ex;
+		outFile.setf(ios::scientific, ios::floatfield);
+		outFile << "  " << setw(10) << setprecision(4) << freq*1e-9;
+		outFile.setf(ios::scientific, ios::floatfield);
+		outFile << "  " << setw(11) << setprecision(4) << tauBack;
+		outFile.setf(ios::scientific, ios::floatfield);
+		outFile << "  " << setw(11) << setprecision(4) << T_lBack;
+		outFile.setf(ios::scientific, ios::floatfield);
+		outFile << "  " << setw(11) << setprecision(4) << tauHII;
+		outFile.setf(ios::scientific, ios::floatfield);
+		outFile << "  " << setw(11) << setprecision(4) << T_lHII;
+		outFile.setf(ios::scientific, ios::floatfield);
+		outFile << "  " << setw(10) << setprecision(4) << T_lBack+T_lHII;
+		outFile.setf(ios::scientific, ios::floatfield);
+		outFile << "  " << setw(11) << setprecision(4) << tau;
+		outFile.setf(ios::scientific, ios::floatfield);
+		outFile << "  " << setw(10) << setprecision(4) << T_l;
+		outFile << endl;
+
+		if (Convergence == 1)
+		    // only write to .plt file if converged
+		    {
+			plotFile << tauBack << " ";
+			plotFile << T_lBack << " ";
+			plotFile << tauHII << " ";
+			plotFile << T_lHII << " ";
+ 			plotFile << T_ex << " ";
+ 			plotFile << tau << " ";
+			plotFile << T_l << " ";
+		    }
+	    }
+	}
+    }
+    outFile << endl << endl;
+    
+    if (Convergence == 1)
+	// only write to .plt file if converged
+	{
+	    plotFile << endl;
+	}
+    
+
+/*
+    cout << endl << "n(i)  n(f)  n0  A(i,f)  B(i,f)  J(i,f)  C(i,f)  C(f,i) " << endl;
+    for (i=0; i<Number_Of_Levels; i++){
+	for (f=0; f<Number_Of_Levels; f++){
+	    double n0 = N_tot/n_Of_Level[Number_Of_Levels];
+	    cout << setiosflags(ios::fixed);
+	    cout << setw(8) << i << ", " << f << ": ";    
+	    cout.setf(ios::scientific, ios::floatfield);
+	    cout << setw(10) << setprecision(3) << n_Of_Level[i] << " ";
+	    cout << setw(10) << setprecision(3) << n_Of_Level[f] << " ";
+	    cout << setw(10) << setprecision(3) << n0 << " ";
+	    cout << setw(10) << setprecision(3) << Einstein_A[i][f] << " ";
+	    cout << setw(10) << setprecision(3) << Einstein_B[i][f] << " ";
+	    cout << setw(10) << setprecision(3) << Einstein_B[i][f]*this.calcJ(i,f,thisCloud) << " ";
+	    cout << setw(10) << setprecision(3) << Collisions[i][f] << " ";
+	    cout << setw(10) << setprecision(3) << Collisions[f][i] << " ";
+	    cout << setw(10) << setprecision(3) << P[i][f] << " ";
+	    cout << setw(10) << setprecision(3) << P[f][i] << endl;
+	}
+    }
+    cout << "PrintOut" << endl;
+    */
+}
+
