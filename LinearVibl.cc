@@ -148,7 +148,8 @@ LinearVibl::LinearVibl(int size, string MolFile, string ColFile,
 #ifdef BLITZ
 					 Einstein_A(i,f) = mu[2];   // this was A, not mu
 #else
-					 Einstein_A[i][f] = mu[2];   // this was A, not mu
+					 Einstein_A[i][f] = 64 * pow(Pi,4) * pow(freq,3)/
+					(3*h_Planck*pow(c_Light, 3))*mu[2]*mu[2];   // this was A, not mu
 #endif
 				    if (deltaJ == 1)
 					{
